@@ -65,19 +65,41 @@ Les injections SQL peuvent avoir des impacts catastrophiques :
 
 ### Lancer l'environnement vulnérable
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-3-sql-injection
 docker-compose up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-3-sql-injection
+docker-compose up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 L'application vulnérable sera accessible sur `http://localhost:3002`
 
 ### Lancer l'environnement sécurisé
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-3-sql-injection
 docker-compose -f docker-compose.secured.yml up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-3-sql-injection
+docker-compose -f docker-compose.secured.yml up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 L'application sécurisée sera accessible sur `http://localhost:3003`
 
@@ -266,15 +288,56 @@ Expliquez :
 
 ### La requête ne fonctionne pas
 
-- Vérifiez la syntaxe SQL de votre requête préparée
-- Vérifiez que tous les paramètres sont bien passés
-- Consultez les logs de la base de données
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+
+# Consultez les logs de la base de données
+docker-compose logs db
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+
+# Consultez les logs de la base de données
+docker-compose logs db
+```
+
+**Où exécuter** : Depuis le dossier de la room
+
+Vérifiez également :
+- La syntaxe SQL de votre requête préparée
+- Que tous les paramètres sont bien passés
 
 ### Erreur "SQLITE_ERROR"
 
-- Vérifiez que la table existe
-- Vérifiez la syntaxe SQL
-- Vérifiez les types de données
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+
+# Consultez les logs détaillés
+docker-compose logs -f
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+
+# Consultez les logs détaillés
+docker-compose logs -f
+```
+
+**Où exécuter** : Depuis le dossier de la room
+
+Vérifiez également :
+- Que la table existe
+- La syntaxe SQL
+- Les types de données
 
 ## Prochaines étapes
 

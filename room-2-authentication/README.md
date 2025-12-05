@@ -45,10 +45,10 @@ Un **hash** (ou hachage) est une fonction cryptographique unidirectionnelle qui 
 **Pourquoi hasher les mots de passe ?** Si la base de données est compromise (fuite de données, accès non autorisé), les mots de passe ne sont pas lisibles en clair. Un attaquant ne peut pas directement utiliser les mots de passe volés.
 
 **Algorithme recommandé** : 
-- ✅ **bcrypt** : Largement utilisé, bien testé, génère automatiquement un salt
-- ✅ **argon2** : Plus récent, considéré comme plus sûr, gagnant du Password Hashing Competition
-- ✅ **scrypt** : Conçu pour être coûteux en mémoire et CPU
-- ❌ **MD5, SHA1, SHA256** : Trop rapides, vulnérables aux attaques par force brute avec GPU, ne doivent PAS être utilisés pour les mots de passe
+- **bcrypt** : Largement utilisé, bien testé, génère automatiquement un salt
+- **argon2** : Plus récent, considéré comme plus sûr, gagnant du Password Hashing Competition
+- **scrypt** : Conçu pour être coûteux en mémoire et CPU
+- **MD5, SHA1, SHA256** : Trop rapides, vulnérables aux attaques par force brute avec GPU, ne doivent PAS être utilisés pour les mots de passe
 
 **Exemple de hash bcrypt** :
 ```
@@ -107,19 +107,41 @@ Une **session** est un mécanisme qui permet de maintenir l'état d'authentifica
 
 ### Lancer l'environnement vulnérable
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-2-authentication
 docker-compose up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-2-authentication
+docker-compose up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 L'application vulnérable sera accessible sur `http://localhost:3000`
 
 ### Lancer l'environnement sécurisé
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-2-authentication
 docker-compose -f docker-compose.secured.yml up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-2-authentication
+docker-compose -f docker-compose.secured.yml up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 L'application sécurisée sera accessible sur `http://localhost:3001`
 

@@ -92,10 +92,21 @@ document.getElementById('message').innerHTML = location.hash.substring(1);
 
 ## Démarrage
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-4-xss
 docker-compose up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-4-xss
+docker-compose up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 Application vulnérable : `http://localhost:3004`
 Application sécurisée : `http://localhost:3005`

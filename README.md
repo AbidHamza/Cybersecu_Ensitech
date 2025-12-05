@@ -42,23 +42,56 @@ Chaque room est indépendante mais suit une progression logique :
 
 ### Installation rapide (avec Docker)
 
-1. Clonez le dépôt :
-```bash
-git clone <url-du-depot>
-cd web-sec-academy
-```
+1. **Clonez le dépôt** :
+   
+   Ouvrez votre terminal (PowerShell sur Windows, Terminal sur Mac) et exécutez :
+   
+   ```bash
+   git clone https://github.com/AbidHamza/Cybersecu_Ensitech.git
+   cd Cybersecu_Ensitech
+   ```
+   
+   **Où exécuter** : Dans le dossier où vous voulez télécharger le projet (ex: `C:\Users\VotreNom\Desktop` ou `~/Desktop`)
 
-2. Vérifiez Docker :
-```bash
-docker --version
-docker-compose --version
-```
+2. **Vérifiez Docker** :
+   
+   Dans le même terminal, vérifiez que Docker est installé :
+   
+   **Windows (PowerShell)** :
+   ```powershell
+   docker --version
+   docker-compose --version
+   ```
+   
+   **Mac (Terminal)** :
+   ```bash
+   docker --version
+   docker-compose --version
+   ```
+   
+   **Où exécuter** : N'importe où dans votre terminal
+   
+   Si Docker n'est pas installé, téléchargez-le sur [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
 
-3. Lancez un environnement de test :
-```bash
-cd room-2-authentication
-docker-compose up
-```
+3. **Lancez un environnement de test** :
+   
+   Naviguez vers une room et lancez Docker :
+   
+   **Windows (PowerShell)** :
+   ```powershell
+   cd room-2-authentication
+   docker-compose up
+   ```
+   
+   **Mac (Terminal)** :
+   ```bash
+   cd room-2-authentication
+   docker-compose up
+   ```
+   
+   **Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+   
+   **Résultat attendu** : Vous devriez voir les logs de l'application démarrer. L'application sera accessible sur `http://localhost:3000`
 
 ## Lancer les environnements
 
@@ -66,23 +99,110 @@ Chaque room contient un `docker-compose.yml` pour lancer l'environnement vulnér
 
 ### Lancer une room spécifique
 
-```bash
+**Étape 1** : Ouvrez votre terminal et naviguez vers le dossier de la room
+
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-3-sql-injection
 docker-compose up -d
 ```
 
-L'application sera accessible sur le port indiqué dans le README de la room.
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-3-sql-injection
+docker-compose up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+
+**Explication** :
+- `cd room-3-sql-injection` : Change de répertoire vers la room 3
+- `docker-compose up -d` : Lance les conteneurs en arrière-plan (`-d` = detached mode)
+
+L'application sera accessible sur le port indiqué dans le README de la room (généralement `http://localhost:3002` pour la room 3).
 
 ### Arrêter un environnement
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room (ex: room-3-sql-injection)
 docker-compose down
 ```
 
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room (ex: room-3-sql-injection)
+docker-compose down
+```
+
+**Où exécuter** : Depuis le dossier de la room où vous avez lancé Docker (ex: `room-3-sql-injection`)
+
+**Explication** : `docker-compose down` arrête et supprime les conteneurs de la room.
+
 ### Voir les logs
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room
 docker-compose logs -f
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room
+docker-compose logs -f
+```
+
+**Où exécuter** : Depuis le dossier de la room où Docker est lancé
+
+**Explication** : `-f` suit les logs en temps réel (comme `tail -f`). Appuyez sur `Ctrl+C` pour quitter.
+
+### Exemple complet : Lancer la Room 2
+
+**Windows (PowerShell)** :
+```powershell
+# 1. Ouvrez PowerShell
+# 2. Naviguez vers le dossier du projet
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech
+
+# 3. Allez dans la room 2
+cd room-2-authentication
+
+# 4. Lancez Docker
+docker-compose up -d
+
+# 5. Vérifiez que ça fonctionne (optionnel)
+docker-compose ps
+
+# 6. Pour voir les logs
+docker-compose logs -f
+
+# 7. Pour arrêter (dans un autre terminal ou après Ctrl+C)
+docker-compose down
+```
+
+**Mac (Terminal)** :
+```bash
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier du projet
+cd ~/Desktop/Cybersecu_Ensitech
+
+# 3. Allez dans la room 2
+cd room-2-authentication
+
+# 4. Lancez Docker
+docker-compose up -d
+
+# 5. Vérifiez que ça fonctionne (optionnel)
+docker-compose ps
+
+# 6. Pour voir les logs
+docker-compose logs -f
+
+# 7. Pour arrêter (dans un autre terminal ou après Ctrl+C)
+docker-compose down
 ```
 
 ## Utiliser le dépôt sans Docker
@@ -115,18 +235,43 @@ Si vous ne pouvez pas installer Docker, vous pouvez installer les dépendances l
 
 **Exemple avec Room 2 - Authentication :**
 
-```bash
-# 1. Aller dans le dossier de l'application vulnérable
-cd room-2-authentication/src-vulnerable
+**Windows (PowerShell)** :
+```powershell
+# 1. Ouvrez PowerShell et naviguez vers le dossier du projet
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech
 
-# 2. Installer les dépendances
+# 2. Aller dans le dossier de l'application vulnérable
+cd room-2-authentication\src-vulnerable
+
+# 3. Installer les dépendances
 npm install
 
-# 3. Lancer l'application
+# 4. Lancer l'application
 npm start
 ```
 
-L'application sera accessible sur `http://localhost:3000` (ou le port indiqué dans le code).
+**Mac (Terminal)** :
+```bash
+# 1. Ouvrez Terminal et naviguez vers le dossier du projet
+cd ~/Desktop/Cybersecu_Ensitech
+
+# 2. Aller dans le dossier de l'application vulnérable
+cd room-2-authentication/src-vulnerable
+
+# 3. Installer les dépendances
+npm install
+
+# 4. Lancer l'application
+npm start
+```
+
+**Où exécuter** :
+- Étape 1 : Depuis n'importe où (votre dossier Desktop par exemple)
+- Étapes 2-4 : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+
+**Résultat attendu** : L'application sera accessible sur `http://localhost:3000` (ou le port indiqué dans le code).
+
+**Note** : Sur Windows, utilisez des backslashes (`\`) pour les chemins. Sur Mac/Linux, utilisez des slashes (`/`).
 
 **Important** : 
 - Vous devrez adapter les ports si plusieurs applications tournent en même temps
@@ -143,10 +288,10 @@ L'application sera accessible sur `http://localhost:3000` (ou le port indiqué d
 ### Recommandation
 
 **Docker est fortement recommandé** car :
-- ✅ Environnements isolés et pré-configurés
-- ✅ Pas de conflits avec vos autres projets
-- ✅ Fonctionne de la même manière sur tous les systèmes
-- ✅ Facile à nettoyer (supprimer les conteneurs)
+- Environnements isolés et pré-configurés
+- Pas de conflits avec vos autres projets
+- Fonctionne de la même manière sur tous les systèmes
+- Facile à nettoyer (supprimer les conteneurs)
 
 **Si vous ne pouvez vraiment pas installer Docker** :
 - Suivez la Room 1 (entièrement accessible)
@@ -374,24 +519,142 @@ Dans chaque room, vous trouverez des exemples concrets de cette analyse.
 ## Dépannage pour débutants
 
 ### Docker ne démarre pas
-- Vérifiez que Docker Desktop est lancé
-- Vérifiez les ports utilisés : `netstat -ano | findstr :3000` (Windows)
-- Consultez les logs : `docker-compose logs`
+
+**Windows (PowerShell)** :
+```powershell
+# 1. Vérifiez que Docker Desktop est lancé (icône dans la barre des tâches)
+# Si ce n'est pas le cas, lancez Docker Desktop depuis le menu Démarrer
+
+# 2. Vérifiez les ports utilisés
+netstat -ano | findstr :3000
+
+# 3. Consultez les logs (depuis le dossier de la room)
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-2-authentication
+docker-compose logs
+```
+
+**Mac (Terminal)** :
+```bash
+# 1. Vérifiez que Docker Desktop est lancé (icône dans la barre de menu)
+# Si ce n'est pas le cas, lancez Docker Desktop depuis Applications
+
+# 2. Vérifiez les ports utilisés
+lsof -i :3000
+
+# 3. Consultez les logs (depuis le dossier de la room)
+cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication
+docker-compose logs
+```
+
+**Où exécuter** : 
+- Étape 2 : N'importe où dans le terminal
+- Étape 3 : Depuis le dossier de la room concernée
 
 ### L'application ne répond pas
-- Vérifiez que le conteneur est bien lancé : `docker-compose ps`
-- Vérifiez les logs de l'application : `docker-compose logs -f app`
-- Vérifiez que le port n'est pas déjà utilisé
+
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room (ex: room-2-authentication)
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-2-authentication
+
+# 1. Vérifiez que le conteneur est bien lancé
+docker-compose ps
+
+# 2. Vérifiez les logs de l'application
+docker-compose logs -f app
+
+# 3. Vérifiez que le port n'est pas déjà utilisé
+netstat -ano | findstr :3000
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room (ex: room-2-authentication)
+cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication
+
+# 1. Vérifiez que le conteneur est bien lancé
+docker-compose ps
+
+# 2. Vérifiez les logs de l'application
+docker-compose logs -f app
+
+# 3. Vérifiez que le port n'est pas déjà utilisé
+lsof -i :3000
+```
+
+**Où exécuter** : Depuis le dossier de la room concernée
 
 ### Erreurs de dépendances Node.js
-- Supprimez `node_modules` et `package-lock.json`
-- Réinstallez : `npm install`
-- Vérifiez la version de Node.js : `node --version` (doit être >= 18)
+
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de l'application (ex: room-2-authentication\src-vulnerable)
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-2-authentication\src-vulnerable
+
+# Supprimez les dépendances
+Remove-Item -Recurse -Force node_modules
+Remove-Item package-lock.json
+
+# Réinstallez
+npm install
+
+# Vérifiez la version de Node.js
+node --version
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de l'application (ex: room-2-authentication/src-vulnerable)
+cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication/src-vulnerable
+
+# Supprimez les dépendances
+rm -rf node_modules
+rm package-lock.json
+
+# Réinstallez
+npm install
+
+# Vérifiez la version de Node.js
+node --version
+```
+
+**Où exécuter** : Depuis le dossier `src-vulnerable` ou `src-secured` de la room concernée
+
+**Note** : La version de Node.js doit être >= 18. Si ce n'est pas le cas, téléchargez une version plus récente sur [nodejs.org](https://nodejs.org/)
 
 ### Base de données ne se connecte pas
-- Vérifiez que le conteneur de base de données est lancé
-- Vérifiez les variables d'environnement dans `docker-compose.yml`
-- Consultez les logs de la base de données
+
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier de la room (ex: room-3-sql-injection)
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+
+# 1. Vérifiez que le conteneur de base de données est lancé
+docker-compose ps
+
+# 2. Consultez les logs de la base de données
+docker-compose logs db
+
+# 3. Vérifiez les variables d'environnement dans docker-compose.yml
+Get-Content docker-compose.yml
+```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier de la room (ex: room-3-sql-injection)
+cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+
+# 1. Vérifiez que le conteneur de base de données est lancé
+docker-compose ps
+
+# 2. Consultez les logs de la base de données
+docker-compose logs db
+
+# 3. Vérifiez les variables d'environnement dans docker-compose.yml
+cat docker-compose.yml
+```
+
+**Où exécuter** : Depuis le dossier de la room concernée
 
 ### Code ne fonctionne pas comme attendu
 - Relisez attentivement le README de la room

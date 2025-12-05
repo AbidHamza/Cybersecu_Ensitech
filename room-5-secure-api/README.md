@@ -17,10 +17,21 @@ Vous devez auditer et sécuriser une API REST existante. L'API gère des utilisa
 
 ## Démarrage
 
-```bash
+**Windows (PowerShell)** :
+```powershell
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
 cd room-5-secure-api
 docker-compose up -d
 ```
+
+**Mac (Terminal)** :
+```bash
+# Depuis le dossier racine du projet (Cybersecu_Ensitech)
+cd room-5-secure-api
+docker-compose up -d
+```
+
+**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
 
 API vulnérable : `http://localhost:3006`
 API sécurisée : `http://localhost:3007`
