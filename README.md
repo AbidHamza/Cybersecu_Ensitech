@@ -26,13 +26,21 @@ Chaque room est indépendante mais suit une progression logique :
 
 ### Prérequis techniques
 
+**Option recommandée (avec Docker)** :
 - **Docker** et **Docker Compose** : pour lancer les environnements isolés
 - **Node.js** (version 18 ou supérieure) : pour exécuter les applications
 - **Postman** (optionnel) : pour tester les APIs dans la Room 5
 - **Un éditeur de code** : VS Code, WebStorm, ou autre
 - **Git** : pour cloner et versionner
 
-### Installation rapide
+**Option alternative (sans Docker)** :
+- **Node.js** (version 18 ou supérieure) : obligatoire pour lancer les applications localement
+- **Un éditeur de code** : VS Code, WebStorm, ou autre
+- **Git** : pour cloner et versionner
+
+> **Note** : Si vous n'avez pas Docker, consultez la section [Utiliser le dépôt sans Docker](#utiliser-le-dépôt-sans-docker) ci-dessous pour les instructions détaillées.
+
+### Installation rapide (avec Docker)
 
 1. Clonez le dépôt :
 ```bash
@@ -76,6 +84,83 @@ docker-compose down
 ```bash
 docker-compose logs -f
 ```
+
+## Utiliser le dépôt sans Docker
+
+Si vous n'avez pas Docker installé, vous pouvez quand même utiliser ce dépôt, mais avec quelques limitations.
+
+### Ce que vous pouvez faire sans Docker
+
+- **Room 1 - Introduction & Fondamentaux** : Entièrement accessible sans Docker (contenu théorique uniquement)
+- **Lire et analyser le code** : Tous les fichiers source sont disponibles et peuvent être lus
+- **Comprendre les concepts** : Tous les README, exercices et solutions sont accessibles
+
+### Ce que vous ne pourrez pas faire sans Docker
+
+- **Lancer les applications** : Les applications vulnérables et sécurisées nécessitent Docker
+- **Tester les vulnérabilités** : Impossible de reproduire les attaques sans l'environnement
+- **Comparer le code vulnérable vs sécurisé** : Difficile de voir la différence sans tester
+
+### Alternative : Installation locale (sans Docker)
+
+Si vous ne pouvez pas installer Docker, vous pouvez installer les dépendances localement :
+
+#### Prérequis pour installation locale
+
+1. **Node.js** (version 18 ou supérieure) : [nodejs.org](https://nodejs.org/)
+2. **SQLite** : Généralement inclus avec Node.js, ou téléchargeable séparément
+3. **npm** : Inclus avec Node.js
+
+#### Étapes pour lancer une application localement
+
+**Exemple avec Room 2 - Authentication :**
+
+```bash
+# 1. Aller dans le dossier de l'application vulnérable
+cd room-2-authentication/src-vulnerable
+
+# 2. Installer les dépendances
+npm install
+
+# 3. Lancer l'application
+npm start
+```
+
+L'application sera accessible sur `http://localhost:3000` (ou le port indiqué dans le code).
+
+**Important** : 
+- Vous devrez adapter les ports si plusieurs applications tournent en même temps
+- Les bases de données SQLite seront créées localement dans le dossier de l'application
+- Certaines configurations peuvent nécessiter des ajustements
+
+#### Limitations de l'installation locale
+
+- **Pas d'isolation** : Les applications tournent directement sur votre machine
+- **Configuration manuelle** : Vous devrez peut-être adapter les ports et configurations
+- **Base de données** : SQLite sera créée localement (fichiers `.db` dans le dossier)
+- **Dépendances système** : Certaines dépendances peuvent nécessiter des outils système supplémentaires
+
+### Recommandation
+
+**Docker est fortement recommandé** car :
+- ✅ Environnements isolés et pré-configurés
+- ✅ Pas de conflits avec vos autres projets
+- ✅ Fonctionne de la même manière sur tous les systèmes
+- ✅ Facile à nettoyer (supprimer les conteneurs)
+
+**Si vous ne pouvez vraiment pas installer Docker** :
+- Suivez la Room 1 (entièrement accessible)
+- Lisez et analysez le code des autres rooms
+- Consultez les solutions pour comprendre les corrections
+- Installez Node.js localement si vous voulez tester (voir instructions ci-dessus)
+
+### Obtenir de l'aide pour l'installation
+
+Si vous avez des difficultés à installer Docker ou Node.js :
+1. Consultez la documentation officielle :
+   - Docker : [docs.docker.com](https://docs.docker.com/get-docker/)
+   - Node.js : [nodejs.org](https://nodejs.org/)
+2. Créez une issue sur GitHub avec le tag `[Question]` pour obtenir de l'aide
 
 ## Pourquoi la sécurité concerne chaque développeur
 
@@ -194,36 +279,28 @@ La limitation du nombre de requêtes qu'un utilisateur (ou une IP) peut effectue
 ## Roadmap pédagogique
 
 ### Room 1 - Introduction & fondamentaux
-**Durée estimée** : 1-2 heures
 
 Comprendre les concepts de base, le vocabulaire, et l'importance de la sécurité. Aucun code à écrire, uniquement de la réflexion et de l'analyse.
 
 ### Room 2 - Authentication & sessions
-**Durée estimée** : 3-4 heures
 
 Apprendre à implémenter une authentification sécurisée : hachage de mots de passe, gestion de sessions, protection contre les attaques courantes.
 
 ### Room 3 - SQL Injection
-**Durée estimée** : 3-4 heures
 
 Comprendre les injections SQL, leurs impacts, et comment les prévenir avec les requêtes préparées.
 
 ### Room 4 - XSS
-**Durée estimée** : 3-4 heures
 
 Analyser les différentes formes de XSS, leurs mécanismes, et les techniques de protection (échappement, sanitization, CSP).
 
 ### Room 5 - Sécuriser une API
-**Durée estimée** : 4-5 heures
 
 Appliquer les bonnes pratiques pour sécuriser une API REST : validation, rate limiting, gestion des erreurs, headers de sécurité.
 
 ### Room 6 - Mini Pentest Web
-**Durée estimée** : 5-6 heures
 
 Mettre en pratique toutes les connaissances acquises en réalisant un audit de sécurité simplifié sur une application vulnérable.
-
-**Total estimé** : 20-25 heures de travail
 
 ## Bonnes pratiques générales de sécurité
 
