@@ -1,0 +1,35 @@
+version: '3.8'
+
+# Docker Compose principal pour Web Security Academy
+# Ce fichier permet de lancer rapidement les environnements de test
+# Pour lancer une room spécifique, utilisez le docker-compose.yml dans le dossier de la room
+
+services:
+  # Service de base de données partagée (optionnel)
+  # Les rooms peuvent utiliser leur propre base de données si nécessaire
+  mysql:
+    image: mysql:8.0
+    container_name: web-sec-academy-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: websec_db
+      MYSQL_USER: websec_user
+      MYSQL_PASSWORD: websec_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - websec-network
+    profiles:
+      - shared-db
+    # Ce service n'est pas lancé par défaut
+    # Utilisez: docker-compose --profile shared-db up
+
+networks:
+  websec-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+

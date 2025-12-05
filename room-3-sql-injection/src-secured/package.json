@@ -1,0 +1,14 @@
+{
+  "name": "sql-injection-secured",
+  "version": "1.0.0",
+  "description": "Application sécurisée contre les injections SQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6"
+  }
+}
+
