@@ -1,0 +1,16 @@
+services:
+  app-secured:
+    build: ./src-secured
+    container_name: room3-sql-secured
+    ports:
+      - "3003:3000"
+    volumes:
+      - ./src-secured:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room3-network
+
+networks:
+  room3-network:
+    driver: bridge

@@ -63,45 +63,176 @@ Les injections SQL peuvent avoir des impacts catastrophiques :
 
 ## Démarrage
 
+### Prérequis
+
+Avant de commencer, vérifiez que vous avez :
+
+- Docker installé et fonctionnel
+- Docker Compose installé et fonctionnel
+- Un navigateur web moderne (Chrome, Firefox, Edge)
+
+### Vérification de l'installation
+
+#### Windows (PowerShell)
+
+```powershell
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis le menu Démarrer
+
+#### Mac (Terminal)
+
+```bash
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis Applications
+
+#### Linux (Terminal)
+
+```bash
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+Installez Docker en suivant les instructions officielles : https://docs.docker.com/get-docker/
+
+---
+
 ### Lancer l'environnement vulnérable
 
-**Windows (PowerShell)** :
+**Explication :** Nous allons lancer l'application vulnérable pour voir les injections SQL en action.
+
+#### Windows (PowerShell)
+
 ```powershell
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-3-sql-injection
+# 1. Ouvrez PowerShell
+# 2. Naviguez vers le dossier de la room
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+
+# 3. Lancez Docker Compose
 docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room3-sql-vulnerable
 ```
 
-**Mac (Terminal)** :
+**Que fait cette commande ?**
+
+- `docker-compose up -d` : Lance le conteneur Docker en arrière-plan
+- `-d` signifie "detached" (détaché) : le conteneur tourne en arrière-plan
+- L'application démarre automatiquement
+
+#### Mac (Terminal)
+
 ```bash
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-3-sql-injection
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+
+# 3. Lancez Docker Compose
 docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room3-sql-vulnerable
 ```
 
-**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+#### Linux (Terminal)
 
-L'application vulnérable sera accessible sur `http://localhost:3002`
+```bash
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+
+# 3. Lancez Docker Compose
+docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room3-sql-vulnerable
+```
+
+**Vérification :**
+
+Ouvrez votre navigateur et allez sur :
+- `http://localhost:3002` → Application vulnérable
+
+**Si ça ne fonctionne pas :**
+
+- Vérifiez les logs : `docker-compose logs`
+- Vérifiez que le port 3002 n'est pas déjà utilisé
+- Assurez-vous que Docker Desktop est lancé
+
+---
 
 ### Lancer l'environnement sécurisé
 
-**Windows (PowerShell)** :
+**Explication :** Une fois que vous avez testé les injections SQL, lancez la version sécurisée pour comparer.
+
+#### Windows (PowerShell)
+
 ```powershell
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-3-sql-injection
+# Depuis le dossier room-3-sql-injection
 docker-compose -f docker-compose.secured.yml up -d
+
+# Vérifiez que ça fonctionne
+docker-compose -f docker-compose.secured.yml ps
 ```
 
-**Mac (Terminal)** :
+#### Mac/Linux (Terminal)
+
 ```bash
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-3-sql-injection
+# Depuis le dossier room-3-sql-injection
 docker-compose -f docker-compose.secured.yml up -d
+
+# Vérifiez que ça fonctionne
+docker-compose -f docker-compose.secured.yml ps
 ```
 
-**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+**Vérification :**
 
-L'application sécurisée sera accessible sur `http://localhost:3003`
+Ouvrez votre navigateur et allez sur :
+- `http://localhost:3003` → Application sécurisée
 
 ## Analyse du code vulnérable
 
@@ -182,6 +313,195 @@ Utilisez la **[checklist de sécurité complète](./checklists/security-checklis
 
 **Conseil** : Utilisez cette checklist comme référence lors du développement de vos propres applications.
 
+## Exemples de payloads SQL à tester
+
+**Note importante :** Ces tests sont pour l'apprentissage uniquement. Ne les utilisez jamais sur des sites réels sans autorisation.
+
+### Payload 1 : Bypass d'authentification
+
+```
+' OR '1'='1
+```
+
+**Où tester :** Champ de recherche ou formulaire de login
+
+**Explication :** Cette injection modifie la condition SQL pour qu'elle soit toujours vraie.
+
+**Comment ça marche :**
+
+Requête normale :
+```sql
+SELECT * FROM books WHERE title = 'Harry Potter'
+```
+
+Avec l'injection :
+```sql
+SELECT * FROM books WHERE title = '' OR '1'='1'
+```
+
+La condition `'1'='1'` est toujours vraie, donc tous les livres sont retournés.
+
+---
+
+### Payload 2 : Commentaire SQL
+
+```
+' OR '1'='1'--
+```
+
+**Où tester :** Champ de recherche
+
+**Explication :** Le `--` commente le reste de la requête SQL, ce qui permet d'ignorer les conditions suivantes.
+
+**Comment ça marche :**
+
+Si la requête originale est :
+```sql
+SELECT * FROM books WHERE title = 'input' AND author = 'test'
+```
+
+Avec l'injection :
+```sql
+SELECT * FROM books WHERE title = '' OR '1'='1'--' AND author = 'test'
+```
+
+Tout après `--` est ignoré, donc la condition `author = 'test'` n'est pas vérifiée.
+
+---
+
+### Payload 3 : UNION pour extraire des données
+
+```
+' UNION SELECT username, password FROM users--
+```
+
+**Où tester :** Champ de recherche (si la table a le bon nombre de colonnes)
+
+**Explication :** UNION permet de combiner deux requêtes SQL. Si la première requête retourne 2 colonnes, vous pouvez utiliser UNION pour extraire des données d'une autre table.
+
+**Comment ça marche :**
+
+Requête originale :
+```sql
+SELECT title, author FROM books WHERE title = 'input'
+```
+
+Avec l'injection :
+```sql
+SELECT title, author FROM books WHERE title = '' UNION SELECT username, password FROM users--'
+```
+
+Cela retourne d'abord les livres, puis les utilisateurs avec leurs mots de passe.
+
+**Important :** Le nombre de colonnes doit correspondre. Si la première requête retourne 2 colonnes, UNION doit aussi retourner 2 colonnes.
+
+---
+
+### Payload 4 : Erreur SQL pour identifier la structure
+
+```
+' OR 1=1 AND 1=2--
+```
+
+**Où tester :** N'importe quel champ
+
+**Explication :** Génère une erreur qui peut révéler la structure de la base de données.
+
+**Comment ça marche :**
+
+Si vous entrez ce payload et que vous voyez une erreur comme :
+```
+SQLITE_ERROR: no such column: password
+```
+
+Cela vous indique que la colonne s'appelle peut-être `password_hash` au lieu de `password`.
+
+---
+
+### Payload 5 : Injection avec guillemets doubles
+
+```
+" OR "1"="1
+```
+
+**Où tester :** Si les guillemets simples sont échappés
+
+**Explication :** Parfois les applications échappent les guillemets simples mais pas les doubles.
+
+---
+
+### Payload 6 : Injection avec encodage URL
+
+```
+%27 OR %271%27=%271
+```
+
+**Où tester :** Dans l'URL directement
+
+**Explication :** Version encodée URL de `' OR '1'='1`. Certaines applications décodent automatiquement.
+
+---
+
+## Comment tester ces payloads
+
+### Test 1 : Injection SQL basique
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3002`
+2. Dans le champ de recherche, entrez : `' OR '1'='1`
+3. Cliquez sur "Rechercher"
+
+**Résultat attendu (vulnérable) :**
+
+- Vous voyez tous les livres au lieu de seulement ceux correspondant à votre recherche
+- Cela prouve que l'injection SQL fonctionne
+
+**Résultat attendu (sécurisé) :**
+
+- Vous voyez un message d'erreur ou aucun résultat
+- L'injection ne fonctionne pas grâce aux requêtes préparées
+
+---
+
+### Test 2 : Vérifier les erreurs SQL
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3002`
+2. Dans le champ de recherche, entrez : `'`
+3. Cliquez sur "Rechercher"
+
+**Résultat attendu (vulnérable) :**
+
+- Vous voyez une erreur SQL qui révèle des informations sur la base de données
+- Exemple : `SQLITE_ERROR: near "title": syntax error`
+
+**Résultat attendu (sécurisé) :**
+
+- Vous voyez un message d'erreur générique
+- Aucune information sur la structure de la base de données n'est révélée
+
+---
+
+### Test 3 : Comparer vulnérable vs sécurisé
+
+**Étapes :**
+
+1. Testez le même payload sur les deux applications
+2. Comparez les résultats
+
+**Application vulnérable (http://localhost:3002) :**
+- Entrez : `' OR '1'='1`
+- Résultat : Tous les livres s'affichent
+
+**Application sécurisée (http://localhost:3003) :**
+- Entrez : `' OR '1'='1`
+- Résultat : Aucun livre ou message d'erreur
+- L'injection ne fonctionne pas
+
+---
+
 ## Types d'injections SQL
 
 ### Injection classique
@@ -190,15 +510,34 @@ Utilisez la **[checklist de sécurité complète](./checklists/security-checklis
 ' OR '1'='1
 ```
 
+**Utilisation :** Pour bypasser des conditions ou récupérer toutes les données.
+
+---
+
 ### Injection avec UNION
 
 ```sql
 ' UNION SELECT username, password FROM users--
 ```
 
+**Utilisation :** Pour extraire des données d'autres tables.
+
+**Prérequis :** Connaître le nombre de colonnes retournées par la requête originale.
+
+---
+
 ### Injection aveugle (Blind SQL Injection)
 
 Quand les résultats ne sont pas directement visibles, mais on peut déduire des informations via des réponses conditionnelles.
+
+**Exemple :**
+```sql
+' OR (SELECT COUNT(*) FROM users WHERE username='admin') > 0--
+```
+
+Si la page répond différemment, on sait que l'utilisateur 'admin' existe.
+
+---
 
 ### Injection basée sur le temps (Time-based)
 
@@ -206,14 +545,70 @@ Quand les résultats ne sont pas directement visibles, mais on peut déduire des
 '; WAITFOR DELAY '00:00:05'--
 ```
 
+**Utilisation :** Pour confirmer une injection SQL même si les résultats ne sont pas visibles. Si la page met 5 secondes à répondre, l'injection fonctionne.
+
+**Note :** Cette syntaxe fonctionne sur SQL Server. Pour SQLite, utilisez :
+```sql
+'; SELECT CASE WHEN 1=1 THEN 1 ELSE 1/0 END--
+```
+
+## Arrêter l'environnement
+
+Quand vous avez terminé, arrêtez les conteneurs :
+
+```bash
+# Depuis le dossier room-3-sql-injection
+
+# Arrêter la version vulnérable
+docker-compose down
+
+# Arrêter la version sécurisée
+docker-compose -f docker-compose.secured.yml down
+```
+
+**Que fait cette commande ?**
+
+- Arrête tous les conteneurs de cette room
+- Libère les ports utilisés
+- Nettoie les ressources Docker
+
+---
+
+## Questions fréquentes
+
+**Q : Pourquoi les requêtes préparées protègent-elles contre les injections SQL ?**
+
+R : Les requêtes préparées séparent le code SQL des données. La base de données traite d'abord la structure SQL, puis les données séparément. Même si vous injectez du SQL dans les données, il sera traité comme une valeur, pas comme du code.
+
+**Q : Est-ce que la validation suffit ?**
+
+R : Non ! La validation vérifie que les données sont correctes, mais elle ne protège pas contre les injections SQL. Il faut toujours utiliser des requêtes préparées.
+
+**Q : Comment savoir combien de colonnes retourne une requête ?**
+
+R : Pour utiliser UNION, vous devez connaître le nombre de colonnes. Testez avec :
+```sql
+' UNION SELECT NULL--
+' UNION SELECT NULL, NULL--
+' UNION SELECT NULL, NULL, NULL--
+```
+Quand vous n'avez plus d'erreur, vous avez le bon nombre de colonnes.
+
+**Q : Toutes les bases de données sont-elles vulnérables ?**
+
+R : Oui, toutes les bases de données SQL peuvent être vulnérables si le code concatène directement les entrées utilisateur dans les requêtes.
+
+---
+
 ## Vérification finale
 
 Avant de passer à la Room 4, assurez-vous d'avoir :
 
 - [ ] Compris comment fonctionnent les injections SQL
-- [ ] Testé des injections SQL sur l'application vulnérable
+- [ ] Testé des injections SQL sur l'application vulnérable avec les payloads ci-dessus
 - [ ] Réalisé l'exercice de correction
 - [ ] Compris pourquoi les requêtes préparées sont la solution
+- [ ] Comparé les résultats entre version vulnérable et sécurisée
 - [ ] Consulté la [checklist de sécurité](./checklists/security-checklist.md) et vérifié votre code
 
 ## Erreurs fréquentes
@@ -288,56 +683,58 @@ Expliquez :
 
 ### La requête ne fonctionne pas
 
-**Windows (PowerShell)** :
-```powershell
-# Depuis le dossier de la room
-cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+**Vérifications :**
 
-# Consultez les logs de la base de données
-docker-compose logs db
-```
+1. Consultez les logs de la base de données :
+   ```bash
+   docker-compose logs
+   ```
 
-**Mac (Terminal)** :
-```bash
-# Depuis le dossier de la room
-cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
+2. Vérifiez la syntaxe SQL de votre requête préparée
 
-# Consultez les logs de la base de données
-docker-compose logs db
-```
+3. Vérifiez que tous les paramètres sont bien passés
 
-**Où exécuter** : Depuis le dossier de la room
-
-Vérifiez également :
-- La syntaxe SQL de votre requête préparée
-- Que tous les paramètres sont bien passés
+4. Vérifiez que la table existe dans la base de données
 
 ### Erreur "SQLITE_ERROR"
 
-**Windows (PowerShell)** :
-```powershell
-# Depuis le dossier de la room
-cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-3-sql-injection
+**Causes possibles :**
 
-# Consultez les logs détaillés
-docker-compose logs -f
-```
+1. **Table n'existe pas** : Vérifiez que la base de données est bien initialisée
+2. **Syntaxe SQL incorrecte** : Vérifiez votre requête
+3. **Types de données incorrects** : Vérifiez que vous passez les bons types
 
-**Mac (Terminal)** :
+**Solution :**
+
 ```bash
-# Depuis le dossier de la room
-cd ~/Desktop/Cybersecu_Ensitech/room-3-sql-injection
-
 # Consultez les logs détaillés
 docker-compose logs -f
+
+# Redémarrez les conteneurs
+docker-compose restart
 ```
 
-**Où exécuter** : Depuis le dossier de la room
+### L'application ne répond pas
 
-Vérifiez également :
-- Que la table existe
-- La syntaxe SQL
-- Les types de données
+**Vérifications :**
+
+1. Vérifiez que le conteneur est lancé : `docker-compose ps`
+2. Vérifiez les logs : `docker-compose logs`
+3. Vérifiez que le port 3002 (ou 3003) n'est pas déjà utilisé
+
+### Les injections SQL ne fonctionnent pas
+
+**Si vous testez sur l'application sécurisée :**
+
+C'est normal ! L'application sécurisée utilise des requêtes préparées, donc les injections ne fonctionnent pas. Testez sur l'application vulnérable (port 3002).
+
+**Si vous testez sur l'application vulnérable :**
+
+1. Vérifiez que vous utilisez le bon port (3002)
+2. Essayez différents payloads (certains peuvent être filtrés)
+3. Regardez les erreurs dans la console du navigateur (F12)
+
+Pour plus de détails, consultez [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) à la racine du projet.
 
 ## Prochaines étapes
 

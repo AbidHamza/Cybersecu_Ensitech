@@ -1,0 +1,28 @@
+services:
+  api-vulnerable:
+    build: ./src-vulnerable
+    container_name: room5-api-vulnerable
+    ports:
+      - "3006:3000"
+    volumes:
+      - ./src-vulnerable:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room5-network
+
+  api-secured:
+    build: ./src-secured
+    container_name: room5-api-secured
+    ports:
+      - "3007:3000"
+    volumes:
+      - ./src-secured:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room5-network
+
+networks:
+  room5-network:
+    driver: bridge

@@ -1,0 +1,28 @@
+services:
+  app-vulnerable:
+    build: ./src-vulnerable
+    container_name: room4-xss-vulnerable
+    ports:
+      - "3004:3000"
+    volumes:
+      - ./src-vulnerable:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room4-network
+
+  app-secured:
+    build: ./src-secured
+    container_name: room4-xss-secured
+    ports:
+      - "3005:3000"
+    volumes:
+      - ./src-secured:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room4-network
+
+networks:
+  room4-network:
+    driver: bridge

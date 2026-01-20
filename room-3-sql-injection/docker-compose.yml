@@ -1,0 +1,16 @@
+services:
+  app-vulnerable:
+    build: ./src-vulnerable
+    container_name: room3-sql-vulnerable
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./src-vulnerable:/app
+    working_dir: /app
+    command: npm start
+    networks:
+      - room3-network
+
+networks:
+  room3-network:
+    driver: bridge

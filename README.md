@@ -22,13 +22,200 @@ Chaque room est indépendante mais suit une progression logique :
 
 **Important** : Ne consultez les solutions qu'après avoir tenté de résoudre les exercices par vous-même.
 
+## Guide de Démarrage Ultra-Simple (Pour les étudiants très débutants)
+
+Ce guide est conçu pour les étudiants qui n'ont jamais utilisé Docker, Git, ou même un terminal. Suivez les étapes une par une.
+
+> **Note :** Pour un guide encore plus détaillé avec toutes les explications, consultez [GETTING_STARTED.md](./GETTING_STARTED.md).
+
+---
+
+### Étape 1 : Installer Docker (10 minutes)
+
+**Qu'est-ce que Docker ?**
+
+Docker est un outil qui permet de lancer des applications dans des conteneurs isolés. Pour vous, cela signifie que vous n'avez pas besoin d'installer Node.js, npm, ou d'autres outils. Docker fait tout pour vous.
+
+**Windows :**
+
+1. Allez sur https://www.docker.com/products/docker-desktop
+2. Téléchargez Docker Desktop pour Windows
+3. Installez-le (redémarrez votre ordinateur si demandé)
+4. Lancez Docker Desktop depuis le menu Démarrer
+5. Attendez que l'icône Docker dans la barre des tâches soit verte (en bas à droite)
+
+**Mac :**
+
+1. Allez sur https://www.docker.com/products/docker-desktop
+2. Téléchargez Docker Desktop pour Mac
+3. Installez-le
+4. Lancez Docker Desktop depuis Applications
+5. Attendez que l'icône Docker dans la barre de menu soit active (en haut à droite)
+
+**Linux :**
+
+Suivez les instructions officielles : https://docs.docker.com/get-docker/
+
+**Vérification :**
+
+Ouvrez PowerShell (Windows) ou Terminal (Mac/Linux) et tapez :
+```bash
+docker --version
+```
+
+**Résultat attendu :** `Docker version 20.10.x` ou supérieur
+
+**Si vous voyez une erreur :**
+- "command not found" → Docker n'est pas installé ou pas dans le PATH
+- "Cannot connect to Docker daemon" → Docker Desktop n'est pas lancé
+
+**Solutions :**
+- Réinstallez Docker Desktop
+- Lancez Docker Desktop depuis le menu Démarrer/Applications
+- Redémarrez votre ordinateur
+
+---
+
+### Étape 2 : Installer Git (5 minutes)
+
+**Qu'est-ce que Git ?**
+
+Git est un outil qui permet de télécharger des projets depuis GitHub. C'est comme télécharger un fichier, mais pour du code.
+
+**Windows :**
+
+1. Allez sur https://git-scm.com/download/win
+2. Téléchargez Git pour Windows
+3. Installez-le avec les options par défaut
+4. Redémarrez PowerShell si nécessaire
+
+**Mac :**
+
+Git est généralement déjà installé. Vérifiez avec :
+```bash
+git --version
+```
+
+Si ce n'est pas installé :
+```bash
+xcode-select --install
+```
+
+**Linux :**
+
+```bash
+sudo apt-get install git
+```
+
+**Vérification :**
+
+Ouvrez PowerShell (Windows) ou Terminal (Mac) et tapez :
+```bash
+git --version
+```
+
+**Résultat attendu :** `git version 2.x.x`
+
+---
+
+### Étape 3 : Télécharger le projet
+
+**Windows (PowerShell) :**
+
+1. Ouvrez PowerShell
+2. Tapez : `cd Desktop`
+3. Appuyez sur Entrée
+4. Tapez : `git clone https://github.com/AbidHamza/Cybersecu_Ensitech.git`
+5. Appuyez sur Entrée
+6. Attendez que le téléchargement se termine
+7. Tapez : `cd Cybersecu_Ensitech`
+8. Appuyez sur Entrée
+
+**Mac (Terminal) :**
+
+1. Ouvrez Terminal
+2. Tapez : `cd ~/Desktop`
+3. Appuyez sur Entrée
+4. Tapez : `git clone https://github.com/AbidHamza/Cybersecu_Ensitech.git`
+5. Appuyez sur Entrée
+6. Attendez que le téléchargement se termine
+7. Tapez : `cd Cybersecu_Ensitech`
+8. Appuyez sur Entrée
+
+**Vérification :**
+
+Tapez : `ls` (Mac/Linux) ou `dir` (Windows)
+
+**Vous devriez voir :**
+- room-1-introduction-basics/
+- room-2-authentication/
+- room-3-sql-injection/
+- room-4-xss/
+- room-5-secure-api/
+- room-6-mini-pentest-web/
+- README.md
+- etc.
+
+---
+
+### Étape 4 : Commencer avec Room 1 (Pas besoin de Docker)
+
+**Room 1 est entièrement théorique, pas besoin de Docker !**
+
+1. Ouvrez le dossier `room-1-introduction-basics`
+2. Ouvrez le fichier `README.md` (double-cliquez dessus)
+3. Lisez-le attentivement
+4. Faites les exercices dans le dossier `exercises/`
+5. Consultez les solutions dans `SOLUTIONS/room-1/` après avoir essayé
+
+**Temps estimé :** 1-2 heures
+
+**Conseil :** Prenez votre temps. Room 1 pose les bases essentielles pour comprendre les rooms suivantes.
+
+---
+
+### Étape 5 : Tester Room 2 avec Docker (Votre première application)
+
+**Une fois Room 1 terminée, testez Room 2 avec Docker :**
+
+**Windows (PowerShell) :**
+
+1. Ouvrez PowerShell
+2. Tapez : `cd Desktop\Cybersecu_Ensitech\room-2-authentication`
+3. Appuyez sur Entrée
+4. Tapez : `docker-compose up -d`
+5. Appuyez sur Entrée
+6. Attendez 10-15 secondes
+
+**Mac (Terminal) :**
+
+1. Ouvrez Terminal
+2. Tapez : `cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication`
+3. Appuyez sur Entrée
+4. Tapez : `docker-compose up -d`
+5. Appuyez sur Entrée
+6. Attendez 10-15 secondes
+
+**Vérification :**
+
+1. Ouvrez votre navigateur (Chrome, Firefox, Edge)
+2. Allez sur : http://localhost:3000
+3. Vous devriez voir l'application !
+
+**Si ça ne fonctionne pas :**
+- Vérifiez que Docker Desktop est lancé
+- Attendez 10-15 secondes après `docker-compose up -d`
+- Consultez [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+
+---
+
 ## Préparer son environnement
 
 ### Prérequis techniques
 
 **Option recommandée (avec Docker)** :
 - **Docker** et **Docker Compose** : pour lancer les environnements isolés
-- **Node.js** (version 18 ou supérieure) : pour exécuter les applications
+- **Node.js** (version 18 ou supérieure) : optionnel si vous utilisez Docker
 - **Postman** (optionnel) : pour tester les APIs dans la Room 5
 - **Un éditeur de code** : VS Code, WebStorm, ou autre
 - **Git** : pour cloner et versionner
@@ -516,39 +703,262 @@ Logger les tentatives de connexion, les erreurs critiques, les actions sensibles
 
 Dans chaque room, vous trouverez des exemples concrets de cette analyse.
 
-## Dépannage pour débutants
+## Dépannage
 
-### Docker ne démarre pas
+Pour un guide de dépannage complet avec toutes les solutions aux problèmes courants, consultez **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**.
 
-**Windows (PowerShell)** :
+### Dépannage rapide
+
+### Problèmes Docker
+
+#### Docker ne démarre pas
+
+**Symptôme :** `docker: command not found` ou `Cannot connect to Docker daemon`
+
+**Solutions :**
+
+**Windows :**
+1. Vérifiez que Docker Desktop est installé
+2. Lancez Docker Desktop depuis le menu Démarrer
+3. Attendez que l'icône Docker dans la barre des tâches soit verte
+4. Redémarrez votre ordinateur si nécessaire
+5. Réinstallez Docker Desktop si le problème persiste
+
+**Mac :**
+1. Vérifiez que Docker Desktop est installé
+2. Lancez Docker Desktop depuis Applications
+3. Attendez que l'icône Docker dans la barre de menu soit active
+4. Redémarrez votre Mac si nécessaire
+
+**Vérification :**
+```bash
+docker --version
+# Doit afficher : Docker version 20.10.x ou supérieur
+```
+
+---
+
+#### Port déjà utilisé
+
+**Symptôme :** `Error: bind: address already in use` ou `Port 3000 is already allocated`
+
+**Solutions :**
+
+**Windows (PowerShell) :**
 ```powershell
-# 1. Vérifiez que Docker Desktop est lancé (icône dans la barre des tâches)
-# Si ce n'est pas le cas, lancez Docker Desktop depuis le menu Démarrer
-
-# 2. Vérifiez les ports utilisés
+# 1. Trouvez quel programme utilise le port
 netstat -ano | findstr :3000
 
-# 3. Consultez les logs (depuis le dossier de la room)
-cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-2-authentication
-docker-compose logs
+# 2. Notez le PID (dernier nombre)
+# 3. Arrêtez le processus
+taskkill /PID [PID] /F
+
+# Ou arrêtez tous les conteneurs Docker
+docker stop $(docker ps -q)
 ```
 
-**Mac (Terminal)** :
+**Mac/Linux (Terminal) :**
 ```bash
-# 1. Vérifiez que Docker Desktop est lancé (icône dans la barre de menu)
-# Si ce n'est pas le cas, lancez Docker Desktop depuis Applications
-
-# 2. Vérifiez les ports utilisés
+# 1. Trouvez quel programme utilise le port
 lsof -i :3000
 
-# 3. Consultez les logs (depuis le dossier de la room)
-cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication
+# 2. Notez le PID
+# 3. Arrêtez le processus
+kill -9 [PID]
+
+# Ou arrêtez tous les conteneurs Docker
+docker stop $(docker ps -q)
+```
+
+**Alternative :** Changez le port dans le fichier `docker-compose.yml` de la room
+
+---
+
+#### Conteneur ne démarre pas
+
+**Symptôme :** `docker-compose up` échoue ou le conteneur s'arrête immédiatement
+
+**Solutions :**
+
+1. **Vérifiez les logs :**
+   ```bash
+   docker-compose logs
+   ```
+
+2. **Vérifiez que tous les fichiers sont présents :**
+   - `Dockerfile` dans chaque dossier src
+   - `package.json` dans chaque dossier src
+   - `server.js` dans chaque dossier src
+
+3. **Réinstallez les dépendances :**
+   ```bash
+   docker-compose down
+   docker-compose build --no-cache
+   docker-compose up -d
+   ```
+
+4. **Vérifiez les erreurs dans les logs :**
+   ```bash
+   docker-compose logs -f
+   ```
+
+---
+
+### Problèmes d'accès
+
+#### L'application ne répond pas
+
+**Vérifications étape par étape :**
+
+1. **Le conteneur est-il lancé ?**
+   ```bash
+   docker-compose ps
+   ```
+   Vous devriez voir "Up" dans la colonne State
+
+2. **Les logs montrent-ils des erreurs ?**
+   ```bash
+   docker-compose logs
+   ```
+   Cherchez les messages d'erreur en rouge
+
+3. **Essayez d'accéder à l'URL dans un navigateur privé**
+   - Ouvrez une fenêtre de navigation privée (Ctrl+Shift+N ou Cmd+Shift+N)
+   - Allez sur l'URL indiquée dans le README de la room
+
+4. **Vérifiez le bon port :**
+   - Room 2 : http://localhost:3000 (vulnérable) ou http://localhost:3001 (sécurisé)
+   - Room 3 : http://localhost:3002 (vulnérable) ou http://localhost:3003 (sécurisé)
+   - Room 4 : http://localhost:3004 (vulnérable) ou http://localhost:3005 (sécurisé)
+   - Room 5 : http://localhost:3006 (vulnérable) ou http://localhost:3007 (sécurisé)
+   - Room 6 : http://localhost:3008
+
+---
+
+#### Erreur 404 (Page non trouvée)
+
+**Causes possibles :**
+
+1. **Mauvaise URL** : Vérifiez le port dans le README de la room
+2. **L'application n'est pas complètement démarrée** : Attendez 10-15 secondes après `docker-compose up`
+3. **Le conteneur s'est arrêté** : Vérifiez avec `docker-compose ps`
+
+**Solution :**
+```bash
+# Vérifiez l'état
+docker-compose ps
+
+# Redémarrez si nécessaire
+docker-compose restart
+```
+
+---
+
+### Problèmes de code
+
+#### Erreur "module not found"
+
+**Symptôme :** `Error: Cannot find module 'express'` ou similaire
+
+**Solution :**
+Les dépendances ne sont pas installées. Docker devrait les installer automatiquement, mais si ça échoue :
+
+```bash
+# Arrêtez les conteneurs
+docker-compose down
+
+# Reconstruisez sans cache
+docker-compose build --no-cache
+
+# Relancez
+docker-compose up -d
+
+# Vérifiez les logs
 docker-compose logs
 ```
 
-**Où exécuter** : 
-- Étape 2 : N'importe où dans le terminal
-- Étape 3 : Depuis le dossier de la room concernée
+---
+
+#### Erreur de syntaxe dans le code
+
+**Symptôme :** `SyntaxError` ou erreurs de compilation
+
+**Solution :**
+Vous avez peut-être modifié les fichiers par erreur. Restaurez-les depuis Git :
+
+```bash
+# Depuis le dossier de la room
+git checkout -- .
+
+# Ou depuis la racine pour restaurer tout
+cd ..
+git checkout -- .
+```
+
+---
+
+### Problèmes spécifiques Windows
+
+#### PowerShell ne reconnaît pas les commandes
+
+**Symptôme :** `&&` n'est pas reconnu
+
+**Solution :**
+Utilisez `;` au lieu de `&&` dans PowerShell :
+
+```powershell
+# Au lieu de :
+cd room-2; docker-compose up -d
+
+# Utilisez :
+cd room-2
+docker-compose up -d
+```
+
+---
+
+#### Problèmes de permissions
+
+**Symptôme :** `Access denied` ou erreurs de permissions
+
+**Solution :**
+1. Lancez PowerShell en tant qu'administrateur (clic droit → Exécuter en tant qu'administrateur)
+2. Ou ajoutez votre utilisateur au groupe Docker
+
+---
+
+### Problèmes spécifiques Mac
+
+#### Docker demande des permissions
+
+**Solution :**
+1. Allez dans Préférences Système → Sécurité et confidentialité
+2. Autorisez Docker Desktop
+
+---
+
+### Besoin d'aide supplémentaire ?
+
+Si vous avez toujours des problèmes :
+
+1. **Consultez les logs détaillés :**
+   ```bash
+   docker-compose logs -f
+   ```
+
+2. **Créez une issue GitHub :**
+   - Allez sur https://github.com/AbidHamza/Cybersecu_Ensitech/issues
+   - Cliquez sur "New Issue"
+   - Titre : `[Question] Problème avec [Room X] - [Description]`
+   - Décrivez :
+     - Ce que vous essayez de faire
+     - Les commandes que vous avez exécutées
+     - Les messages d'erreur complets (copiez-collez)
+     - Votre système d'exploitation (Windows/Mac/Linux)
+
+3. **Vérifiez la documentation Docker :**
+   - https://docs.docker.com/get-docker/
+   - https://docs.docker.com/compose/gettingstarted/
 
 ### L'application ne répond pas
 
@@ -823,12 +1233,26 @@ Si vous êtes bloqué :
 
 ## Prochaines étapes
 
-1. Commencez par la **Room 1** pour acquérir les fondamentaux
-2. Suivez l'ordre des rooms pour une progression naturelle
-3. Prenez le temps de comprendre chaque concept avant de passer au suivant
-4. Pratiquez avec les exercices proposés
-5. Consultez les solutions uniquement après avoir tenté de résoudre les exercices
-6. Partagez vos réponses et posez vos questions via les issues GitHub
+1. **Commencez par la Room 1** pour acquérir les fondamentaux (pas besoin de Docker)
+2. **Suivez l'ordre des rooms** pour une progression naturelle
+3. **Prenez le temps de comprendre** chaque concept avant de passer au suivant
+4. **Pratiquez avec les exercices** proposés dans chaque room
+5. **Consultez les solutions** uniquement après avoir tenté de résoudre les exercices
+6. **Partagez vos réponses** et posez vos questions via les issues GitHub
+
+## Besoin d'aide ?
+
+- **Première fois avec Docker/Git ?** Consultez [GETTING_STARTED.md](./GETTING_STARTED.md) pour un guide ultra-détaillé
+- **Problèmes techniques ?** Consultez [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+- **Questions sur une room ?** Consultez le README de la room concernée
+- **Questions générales ?** Créez une issue GitHub avec le tag `[Question]`
+
+## Ressources supplémentaires
+
+- **Documentation Docker :** https://docs.docker.com/get-docker/
+- **Documentation Docker Compose :** https://docs.docker.com/compose/gettingstarted/
+- **OWASP Top 10 :** https://owasp.org/www-project-top-ten/
+- **MDN Web Docs :** https://developer.mozilla.org/ (pour comprendre HTML, CSS, JavaScript)
 
 Bonne chance dans votre apprentissage de la sécurité web !
 

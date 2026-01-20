@@ -105,45 +105,192 @@ Une **session** est un mécanisme qui permet de maintenir l'état d'authentifica
 
 ## Démarrage
 
+### Prérequis
+
+Avant de commencer, vérifiez que vous avez :
+
+- Docker installé et fonctionnel
+- Docker Compose installé et fonctionnel
+- Un navigateur web moderne (Chrome, Firefox, Edge)
+
+### Vérification de l'installation
+
+#### Windows (PowerShell)
+
+```powershell
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis le menu Démarrer
+
+#### Mac (Terminal)
+
+```bash
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+- Docker n'est pas installé : Téléchargez Docker Desktop depuis https://www.docker.com/products/docker-desktop
+- Docker n'est pas démarré : Lancez Docker Desktop depuis Applications
+
+#### Linux (Terminal)
+
+```bash
+# 1. Vérifier Docker
+docker --version
+# Résultat attendu : Docker version 20.10.x ou supérieur
+
+# 2. Vérifier Docker Compose
+docker-compose --version
+# Résultat attendu : docker-compose version 1.29.x ou supérieur
+
+# 3. Vérifier que Docker fonctionne
+docker ps
+# Résultat attendu : Liste des conteneurs (peut être vide, c'est normal)
+```
+
+**Si vous avez une erreur :**
+
+Installez Docker en suivant les instructions officielles : https://docs.docker.com/get-docker/
+
+---
+
 ### Lancer l'environnement vulnérable
 
-**Windows (PowerShell)** :
+**Explication :** Nous allons lancer l'application vulnérable pour voir les problèmes en action avant de les corriger.
+
+#### Windows (PowerShell)
+
 ```powershell
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-2-authentication
+# 1. Ouvrez PowerShell
+# 2. Naviguez vers le dossier de la room
+cd C:\Users\VotreNom\Desktop\Cybersecu_Ensitech\room-2-authentication
+
+# 3. Lancez Docker Compose
 docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room2-auth-vulnerable
 ```
 
-**Mac (Terminal)** :
+**Que fait cette commande ?**
+
+- `docker-compose up -d` : Lance le conteneur Docker en arrière-plan
+- `-d` signifie "detached" (détaché) : le conteneur tourne en arrière-plan
+- L'application démarre automatiquement
+
+#### Mac (Terminal)
+
 ```bash
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-2-authentication
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication
+
+# 3. Lancez Docker Compose
 docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room2-auth-vulnerable
 ```
 
-**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+#### Linux (Terminal)
 
-L'application vulnérable sera accessible sur `http://localhost:3000`
+```bash
+# 1. Ouvrez Terminal
+# 2. Naviguez vers le dossier de la room
+cd ~/Desktop/Cybersecu_Ensitech/room-2-authentication
+
+# 3. Lancez Docker Compose
+docker-compose up -d
+
+# 4. Vérifiez que ça fonctionne
+docker-compose ps
+# Vous devriez voir un conteneur : room2-auth-vulnerable
+```
+
+**Vérification :**
+
+Ouvrez votre navigateur et allez sur :
+- `http://localhost:3000` → Application vulnérable
+
+**Si ça ne fonctionne pas :**
+
+- Vérifiez les logs : `docker-compose logs`
+- Vérifiez que le port 3000 n'est pas déjà utilisé
+- Assurez-vous que Docker Desktop est lancé
+
+---
 
 ### Lancer l'environnement sécurisé
 
-**Windows (PowerShell)** :
+**Explication :** Une fois que vous avez analysé l'application vulnérable, lancez la version sécurisée pour comparer.
+
+#### Windows (PowerShell)
+
 ```powershell
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-2-authentication
+# Depuis le dossier room-2-authentication
 docker-compose -f docker-compose.secured.yml up -d
+
+# Vérifiez que ça fonctionne
+docker-compose -f docker-compose.secured.yml ps
 ```
 
-**Mac (Terminal)** :
+#### Mac/Linux (Terminal)
+
 ```bash
-# Depuis le dossier racine du projet (Cybersecu_Ensitech)
-cd room-2-authentication
+# Depuis le dossier room-2-authentication
 docker-compose -f docker-compose.secured.yml up -d
+
+# Vérifiez que ça fonctionne
+docker-compose -f docker-compose.secured.yml ps
 ```
 
-**Où exécuter** : Depuis le dossier racine du projet (`Cybersecu_Ensitech`)
+**Vérification :**
 
-L'application sécurisée sera accessible sur `http://localhost:3001`
+Ouvrez votre navigateur et allez sur :
+- `http://localhost:3001` → Application sécurisée
+
+---
+
+## Identifiants de test
+
+Pour tester l'application, utilisez ces identifiants de test :
+
+**Application vulnérable (http://localhost:3000) :**
+- Username : `admin`
+- Password : `admin123`
+
+**Application sécurisée (http://localhost:3001) :**
+- Username : `admin`
+- Password : `admin123`
+
+Ces identifiants fonctionnent sur les deux versions pour faciliter la comparaison.
 
 ## Analyse du code vulnérable
 
@@ -302,6 +449,129 @@ Utilisez la **[checklist de sécurité complète](./checklists/security-checklis
 
 **Protection** : Encouragez l'utilisation de mots de passe uniques, détectez les connexions suspectes.
 
+## Tests à effectuer
+
+### Test 1 : Voir les mots de passe en clair
+
+**Objectif :** Vérifier que les mots de passe sont stockés en clair dans la version vulnérable
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3000`
+2. Créez un compte avec un mot de passe simple (ex: "test123")
+3. Regardez les logs Docker :
+   ```bash
+   docker-compose logs
+   ```
+4. Cherchez le mot de passe dans les logs ou inspectez la base de données
+
+**Résultat attendu (vulnérable) :**
+
+- Le mot de passe apparaît en clair quelque part
+- Cela prouve que les mots de passe ne sont pas hashés
+
+**Résultat attendu (sécurisé) :**
+
+- Seul le hash du mot de passe est visible
+- Le hash ressemble à : `$2b$10$N9qo8uLOickgx2ZMRZoMye...`
+- Impossible de retrouver le mot de passe original
+
+---
+
+### Test 2 : Attaque par force brute
+
+**Objectif :** Tester si le rate limiting fonctionne
+
+**Étapes :**
+
+1. Allez sur `http://localhost:3000` (version vulnérable)
+2. Essayez de vous connecter avec un mauvais mot de passe
+3. Répétez 10 fois rapidement (copiez-collez le formulaire)
+
+**Résultat attendu (vulnérable) :**
+
+- Vous pouvez essayer autant de fois que vous voulez
+- Aucune limitation
+- Un attaquant pourrait tester des milliers de mots de passe
+
+**Résultat attendu (sécurisé) :**
+
+1. Allez sur `http://localhost:3001` (version sécurisée)
+2. Essayez de vous connecter avec un mauvais mot de passe
+3. Répétez 6 fois rapidement
+
+**Résultat attendu :**
+
+- Après 5 tentatives, vous recevez un message d'erreur
+- Vous devez attendre 15 minutes avant de réessayer
+- Cela protège contre les attaques par force brute
+
+---
+
+### Test 3 : Vérifier les cookies de session
+
+**Objectif :** Comparer la sécurité des cookies entre les deux versions
+
+**Étapes :**
+
+1. Connectez-vous sur les deux applications (vulnérable et sécurisée)
+2. Ouvrez les outils développeur (F12)
+3. Allez dans l'onglet "Application" (Chrome) ou "Stockage" (Firefox)
+4. Regardez les cookies
+
+**Résultat attendu (vulnérable) :**
+
+- Cookie de session sans flags de sécurité
+- Accessible via JavaScript (HttpOnly absent)
+- Peut être volé via XSS
+
+**Résultat attendu (sécurisé) :**
+
+- Cookie avec HttpOnly (non accessible via JavaScript)
+- Cookie avec Secure (envoi uniquement via HTTPS)
+- Cookie avec SameSite (protection CSRF)
+
+---
+
+### Test 4 : Comprendre le hachage bcrypt
+
+**Objectif :** Voir comment bcrypt transforme les mots de passe
+
+**Étapes :**
+
+1. Créez deux comptes avec le même mot de passe sur l'application sécurisée
+2. Regardez les hashs dans la base de données (via les logs)
+
+**Résultat attendu :**
+
+- Les deux hashs sont différents (grâce au salt unique)
+- Même mot de passe = hashs différents
+- Cela protège contre les rainbow tables
+
+---
+
+## Arrêter l'environnement
+
+Quand vous avez terminé, arrêtez les conteneurs :
+
+```bash
+# Depuis le dossier room-2-authentication
+
+# Arrêter la version vulnérable
+docker-compose down
+
+# Arrêter la version sécurisée
+docker-compose -f docker-compose.secured.yml down
+```
+
+**Que fait cette commande ?**
+
+- Arrête tous les conteneurs de cette room
+- Libère les ports utilisés
+- Nettoie les ressources Docker
+
+---
+
 ## Vérification finale
 
 Avant de passer à la Room 3, assurez-vous d'avoir :
@@ -310,6 +580,7 @@ Avant de passer à la Room 3, assurez-vous d'avoir :
 - [ ] Compris le fonctionnement de bcrypt et des sels
 - [ ] Implémenté le rate limiting
 - [ ] Sécurisé les cookies de session
+- [ ] Effectué les tests ci-dessus
 - [ ] Consulté la [checklist de sécurité](./checklists/security-checklist.md) et vérifié votre code
 
 ## Erreurs fréquentes
@@ -399,28 +670,79 @@ Dans le corps, expliquez :
 - **Collez directement** votre code dans l'issue
 - Si votre code est très long, vous pouvez le diviser en plusieurs issues (une par exercice)
 
+## Questions fréquentes
+
+**Q : Pourquoi utiliser bcrypt au lieu de MD5 ou SHA256 ?**
+
+R : MD5 et SHA256 sont trop rapides. Un attaquant peut tester des millions de mots de passe par seconde avec un GPU. bcrypt est conçu pour être lent (ajustable), ce qui rend les attaques par force brute beaucoup plus difficiles.
+
+**Q : C'est quoi un salt ?**
+
+R : Un salt est une valeur aléatoire unique ajoutée au mot de passe avant le hachage. Chaque utilisateur a son propre salt. Cela garantit que même deux utilisateurs avec le même mot de passe auront des hashs différents.
+
+**Q : Pourquoi HttpOnly sur les cookies ?**
+
+R : HttpOnly empêche JavaScript d'accéder au cookie. Si votre site a une vulnérabilité XSS, l'attaquant ne pourra pas voler le cookie de session.
+
+**Q : Le rate limiting bloque-t-il tous les utilisateurs ?**
+
+R : Non, le rate limiting est généralement par IP ou par utilisateur. Si vous êtes bloqué, attendez 15 minutes ou utilisez une autre IP.
+
+---
+
 ## Dépannage
 
 ### L'application ne démarre pas
 
-- Vérifiez que Docker est lancé
-- Vérifiez les logs : `docker-compose logs`
-- Vérifiez que le port 3000 (ou 3001) n'est pas déjà utilisé
+**Vérifications :**
+
+1. Vérifiez que Docker est lancé (icône verte dans la barre des tâches)
+2. Vérifiez les logs : `docker-compose logs`
+3. Vérifiez que le port 3000 (ou 3001) n'est pas déjà utilisé :
+   ```powershell
+   # Windows
+   netstat -ano | findstr :3000
+   ```
+   ```bash
+   # Mac/Linux
+   lsof -i :3000
+   ```
 
 ### Erreur "bcrypt not found"
 
-- Vérifiez que les dépendances sont installées : `npm install` dans le dossier de l'application
+**Solution :**
+
+Les dépendances sont installées automatiquement par Docker. Si vous avez cette erreur :
+
+```bash
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+```
 
 ### La connexion ne fonctionne pas
 
-- Vérifiez que la base de données est bien lancée
-- Consultez les logs de l'application
-- Vérifiez les identifiants de test dans le README de la room
+**Vérifications :**
+
+1. Vérifiez que la base de données est bien lancée : `docker-compose ps`
+2. Consultez les logs de l'application : `docker-compose logs`
+3. Vérifiez les identifiants de test :
+   - Username : `admin`
+   - Password : `admin123`
 
 ### Problème avec les cookies
 
-- Vérifiez que vous utilisez HTTPS en production (ou désactivez `secure: true` en développement)
-- Vérifiez les paramètres du navigateur (cookies bloqués ?)
+**En développement (HTTP) :**
+
+Si vous testez en local avec HTTP (pas HTTPS), vous devrez peut-être désactiver le flag `secure: true` dans le code sécurisé, car `secure: true` nécessite HTTPS.
+
+**Vérifications :**
+
+1. Vérifiez les paramètres du navigateur (cookies bloqués ?)
+2. Essayez en navigation privée
+3. Vérifiez la console du navigateur (F12) pour les erreurs
+
+Pour plus de détails, consultez [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) à la racine du projet.
 
 ## Prochaines étapes
 

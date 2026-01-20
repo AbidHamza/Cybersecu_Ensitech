@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "Room 5 - API Tests",
+    "description": "Collection de tests pour Room 5 - Sécuriser une API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3006/api/products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3006",
+          "path": ["api", "products"]
+        },
+        "description": "Récupère la liste de tous les produits"
+      }
+    },
+    {
+      "name": "GET Users (Vulnerable)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3006/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3006",
+          "path": ["api", "users"]
+        },
+        "description": "Récupère la liste de tous les utilisateurs (vulnérable - pas d'authentification)"
+      }
+    },
+    {
+      "name": "GET User by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3006/api/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3006",
+          "path": ["api", "users", "1"]
+        },
+        "description": "Récupère un utilisateur par son ID"
+      }
+    },
+    {
+      "name": "POST Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"testpass123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3006/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3006",
+          "path": ["api", "users"]
+        },
+        "description": "Crée un nouvel utilisateur"
+      }
+    },
+    {
+      "name": "DELETE User",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3006/api/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3006",
+          "path": ["api", "users", "1"]
+        },
+        "description": "Supprime un utilisateur"
+      }
+    }
+  ]
+}
