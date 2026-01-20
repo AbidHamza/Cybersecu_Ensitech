@@ -703,11 +703,9 @@ Logger les tentatives de connexion, les erreurs critiques, les actions sensibles
 
 Dans chaque room, vous trouverez des exemples concrets de cette analyse.
 
-## Dépannage
+## Guide de Dépannage Complet
 
-Pour un guide de dépannage complet avec toutes les solutions aux problèmes courants, consultez **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**.
-
-### Dépannage rapide
+Ce guide vous aide à résoudre les problèmes courants que vous pourriez rencontrer lors de l'utilisation de ce dépôt.
 
 ### Problèmes Docker
 
@@ -1242,10 +1240,10 @@ Si vous êtes bloqué :
 
 ## Besoin d'aide ?
 
-- **Première fois avec Docker/Git ?** Consultez [GETTING_STARTED.md](./GETTING_STARTED.md) pour un guide ultra-détaillé
-- **Problèmes techniques ?** Consultez [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 - **Questions sur une room ?** Consultez le README de la room concernée
 - **Questions générales ?** Créez une issue GitHub avec le tag `[Question]`
+
+> **Note :** Tous les guides de démarrage et de dépannage sont maintenant intégrés directement dans ce README. Vous n'avez plus besoin de consulter des fichiers séparés !
 
 ## Ressources supplémentaires
 
