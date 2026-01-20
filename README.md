@@ -26,7 +26,7 @@ Chaque room est indépendante mais suit une progression logique :
 
 Ce guide est conçu pour les étudiants qui n'ont jamais utilisé Docker, Git, ou même un terminal. Suivez les étapes une par une.
 
-> **Note :** Pour un guide encore plus détaillé avec toutes les explications, consultez [GETTING_STARTED.md](./GETTING_STARTED.md).
+> **Note :** Tous les guides de démarrage et de dépannage sont maintenant intégrés directement dans ce README.
 
 ---
 
@@ -205,7 +205,7 @@ Tapez : `ls` (Mac/Linux) ou `dir` (Windows)
 **Si ça ne fonctionne pas :**
 - Vérifiez que Docker Desktop est lancé
 - Attendez 10-15 secondes après `docker-compose up -d`
-- Consultez [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+- Consultez la section "Guide de Dépannage Complet" ci-dessus dans ce README
 
 ---
 
