@@ -10,6 +10,21 @@ Cette première room vous introduit aux concepts fondamentaux de la sécurité w
 - Comprendre l'importance de la sécurité dans le développement
 - Analyser du pseudo-code pour identifier des problèmes de sécurité
 
+## Par où commencer ?
+
+Si c'est votre première room, lisez dans cet ordre :
+
+1. Ce README (vous y êtes)
+2. `scenarios/scenario-1.md` — un cas concret pour "sentir" le problème
+3. `scenarios/scenario-2.md` — un deuxième cas pratique
+4. `exercises/exercise-1.md` — analyse de code (environ 20 min)
+5. `exercises/exercise-2.md` — évaluation des risques (environ 15 min)
+6. `checklists/checklist-comprehension.md` — vérifiez que vous avez tout compris
+
+**Durée totale estimée : 2h environ**
+
+Pas besoin d'installer quoi que ce soit pour cette room. C'est uniquement de la réflexion et de l'analyse.
+
 ## Scénario narratif
 
 Vous venez d'être embauché comme développeur junior dans une startup technologique. Votre premier jour, votre responsable technique vous montre un extrait de code d'une fonctionnalité critique :
@@ -117,81 +132,87 @@ Une **attaque** est l'exploitation concrète d'une vulnérabilité par une menac
 
 ## OWASP Top 10 expliqué simplement
 
-L'OWASP Top 10 est une liste des 10 risques de sécurité les plus critiques pour les applications web. Voici une explication simplifiée de chacun :
+L'OWASP (Open Web Application Security Project) publie chaque année une liste des 10 risques de sécurité les plus critiques pour les applications web. La version actuelle est l'**OWASP Top 10 2021**. Voici une explication simplifiée de chacun :
 
-### 1. Injection
+### A01 - Contrôle d'accès défaillant
 
-**Qu'est-ce que c'est ?** Injecter du code malveillant dans une application via des entrées utilisateur.
+**Qu'est-ce que c'est ?** C'est la vulnérabilité numéro 1. Les restrictions sur ce que les utilisateurs peuvent faire ne sont pas correctement appliquées.
 
-**Exemple** : SQL Injection, où un attaquant modifie une requête SQL en injectant du code dans un champ de formulaire.
+**Exemples** : Un utilisateur peut accéder aux données d'un autre en modifiant l'URL (`/profil/123` → `/profil/456`). Un utilisateur normal accède à une page d'administration.
 
-**Impact** : Accès non autorisé aux données, modification ou suppression de données.
+**Impact** : Accès non autorisé à des données, modification ou suppression de données, prise de contrôle de compte.
 
-### 2. Authentification défaillante
+### A02 - Défaillances cryptographiques
 
-**Qu'est-ce que c'est ?** Problèmes dans la gestion de l'identité et des sessions utilisateurs.
+**Qu'est-ce que c'est ?** Des données sensibles sont mal protégées par manque ou mauvais usage de la cryptographie.
 
-**Exemples** : Mots de passe faibles, sessions non expirées, mots de passe stockés en clair.
+**Exemples** : Mots de passe stockés en clair ou avec MD5, données transmises en HTTP au lieu de HTTPS, clés de chiffrement codées en dur dans le code source.
 
-**Impact** : Prise de contrôle de comptes utilisateurs.
+**Impact** : Vol de mots de passe, vol de données bancaires, usurpation d'identité.
 
-### 3. Exposition de données sensibles
+### A03 - Injection
 
-**Qu'est-ce que c'est ?** Exposition accidentelle de données sensibles (mots de passe, tokens, informations personnelles).
+**Qu'est-ce que c'est ?** Un attaquant injecte du code malveillant dans une application via des entrées utilisateur non validées. Cette catégorie inclut les injections SQL, les injections de commandes, et le XSS (Cross-Site Scripting).
 
-**Exemples** : Données non chiffrées, erreurs exposant des informations, logs contenant des données sensibles.
+**Exemple** : En entrant `' OR '1'='1` dans un champ de recherche, un attaquant peut récupérer toutes les données de la base. En entrant `<script>alert('XSS')</script>` dans un commentaire, il peut exécuter du JavaScript chez les autres utilisateurs.
 
-**Impact** : Vol d'identité, accès non autorisé.
+**Impact** : Accès non autorisé aux données, modification ou suppression de données, vol de sessions.
 
-### 4. XSS - Cross-Site Scripting
+### A04 - Conception non sécurisée
 
-**Qu'est-ce que c'est ?** Injection de scripts JavaScript malveillants dans une page web.
+**Qu'est-ce que c'est ?** Des failles de conception qui ne peuvent pas être corrigées par une simple mise à jour du code. La sécurité n'a pas été prise en compte dès le départ.
 
-**Exemple** : Un attaquant injecte du code JavaScript dans un champ commentaire, qui s'exécute quand d'autres utilisateurs voient le commentaire.
+**Exemples** : Un système de réinitialisation de mot de passe qui envoie le mot de passe en clair par email. Une application qui n'a pas prévu de mécanisme de verrouillage de compte.
 
-**Impact** : Vol de sessions, redirection vers des sites malveillants, vol de données.
+**Impact** : Des vulnérabilités structurelles difficiles à corriger sans refonte.
 
-### 5. Contrôle d'accès défaillant
+### A05 - Configuration de sécurité incorrecte
 
-**Qu'est-ce que c'est ?** Permissions insuffisantes ou mal configurées.
+**Qu'est-ce que c'est ?** Des paramètres par défaut dangereux, des configurations manquantes, ou des fonctionnalités inutiles activées.
 
-**Exemple** : Un utilisateur peut accéder aux données d'un autre utilisateur en modifiant l'URL.
+**Exemples** : Mots de passe par défaut non changés, fonctionnalités de debug activées en production, headers de sécurité manquants, messages d'erreur trop détaillés.
 
-**Impact** : Accès non autorisé à des données ou fonctionnalités.
+**Impact** : Exposition de l'application à des attaques connues et documentées.
 
-### 6. Configuration de sécurité incorrecte
+### A06 - Composants vulnérables et obsolètes
 
-**Qu'est-ce que c'est ?** Paramètres par défaut dangereux, configurations manquantes.
+**Qu'est-ce que c'est ?** Utilisation de bibliothèques, frameworks, ou dépendances avec des vulnérabilités connues et non corrigées.
 
-**Exemples** : Mots de passe par défaut, fonctionnalités de debug activées en production, headers de sécurité manquants.
+**Exemple** : Utiliser une version ancienne de Node.js, Express, ou jQuery avec une faille de sécurité connue. Ne pas mettre à jour ses `npm packages`.
 
-**Impact** : Exposition de l'application à des attaques connues.
+**Impact** : Exposition à des attaques connues, souvent automatisées par des bots.
 
-### 7. XSS basé sur le DOM
+### A07 - Défaillances d'identification et d'authentification
 
-**Qu'est-ce que c'est ?** Variante du XSS où le code malveillant est injecté via manipulation du DOM.
+**Qu'est-ce que c'est ?** Problèmes dans la vérification de l'identité des utilisateurs et la gestion des sessions.
 
-**Impact** : Similaire au XSS classique.
+**Exemples** : Mots de passe faibles autorisés, sessions non expirées après déconnexion, absence de protection contre les attaques par force brute, mots de passe stockés en clair.
 
-### 8. Désérialisation non sécurisée
+**Impact** : Prise de contrôle de comptes utilisateurs, accès non autorisé.
 
-**Qu'est-ce que c'est ?** Manipulation d'objets sérialisés pour exécuter du code.
+### A08 - Défaillances d'intégrité des données et logiciels
 
-**Impact** : Exécution de code à distance, accès non autorisé.
+**Qu'est-ce que c'est ?** Le code ou les données peuvent être modifiés sans vérification d'intégrité. Inclut la désérialisation non sécurisée et les mises à jour logicielles non vérifiées.
 
-### 9. Utilisation de composants avec vulnérabilités connues
+**Exemple** : Une application accepte un objet sérialisé d'une source non fiable sans vérification. Un pipeline CI/CD récupère des dépendances sans vérifier leur authenticité.
 
-**Qu'est-ce que c'est ?** Utilisation de bibliothèques ou frameworks obsolètes avec des vulnérabilités connues.
+**Impact** : Exécution de code malveillant, compromission de la chaîne de distribution logicielle.
 
-**Exemple** : Utiliser une ancienne version de jQuery avec une faille de sécurité.
+### A09 - Journalisation et surveillance insuffisantes
 
-**Impact** : Exposition à des attaques connues et documentées.
+**Qu'est-ce que c'est ?** L'application ne trace pas suffisamment les événements importants, rendant les attaques indétectables et les incidents impossibles à investiguer.
 
-### 10. Journalisation et surveillance insuffisantes
+**Exemples** : Les tentatives de connexion échouées ne sont pas loggées. Les alertes générées ne sont pas surveillées. Les logs ne contiennent pas assez d'informations pour reconstituer une attaque.
 
-**Qu'est-ce que c'est ?** Manque de traçabilité des événements importants.
+**Impact** : Incapacité à détecter les attaques en cours, difficulté à investiguer après un incident.
 
-**Impact** : Incapacité à détecter les attaques, difficulté à investiguer les incidents.
+### A10 - Falsification de requête côté serveur (SSRF)
+
+**Qu'est-ce que c'est ?** Un attaquant force le serveur à envoyer des requêtes vers des ressources internes auxquelles il n'aurait normalement pas accès.
+
+**Exemple** : Une fonctionnalité "prévisualiser une URL" peut être détournée pour que le serveur accède à `http://169.254.169.254/` (méta-données cloud internes) ou à d'autres services internes.
+
+**Impact** : Accès à des ressources internes, exfiltration de données, contournement de pare-feux.
 
 ## Analyse de code vulnérable
 

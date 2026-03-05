@@ -294,7 +294,16 @@ Ces identifiants fonctionnent sur les deux versions pour faciliter la comparaiso
 
 ## Analyse du code vulnérable
 
-Le code vulnérable se trouve dans `/src-vulnerable/`. Analysons les problèmes principaux :
+Le code vulnérable se trouve dans `/src-vulnerable/`. Voici un aperçu rapide des problèmes et des exercices associés :
+
+| Vulnérabilité | Où dans le code | Exercice |
+|---|---|---|
+| Mots de passe stockés en clair | Comparaison directe `user.password === password` | Exercice 1 |
+| Pas de rate limiting | Aucune limitation sur `/api/login` | Exercice 2 |
+| Messages d'erreur révélateurs | Messages différents selon si l'utilisateur existe | Exercice 2 |
+| Cookie de session non sécurisé | `res.cookie('session', id)` sans options | Exercice 3 |
+
+Analysons chaque problème en détail :
 
 ### Problème 1 : Mots de passe en clair
 
