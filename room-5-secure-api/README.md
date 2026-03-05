@@ -13,7 +13,9 @@ Cette room vous apprend à sécuriser une API REST complète en appliquant toute
 
 ## Scénario narratif
 
-Vous devez auditer et sécuriser une API REST existante. L'API gère des utilisateurs et des produits. Votre mission : identifier toutes les vulnérabilités et implémenter les corrections.
+Vous rejoignez une startup qui vient de mettre en production une API de gestion de produits et d'utilisateurs. Lors d'une réunion, votre responsable technique vous dit : "On a eu un signalement bizarre hier soir — quelqu'un a récupéré des données qu'il n'aurait pas dû voir. Regarde le code, je veux un rapport avant ce soir."
+
+Votre mission : analyser l'API vulnérable dans `/src-vulnerable/`, identifier toutes les failles, et implémenter les corrections dans votre propre version sécurisée.
 
 ---
 
@@ -163,12 +165,18 @@ Ouvrez votre navigateur et allez sur :
 
 ## Erreurs courantes identifiées
 
-1. Absence d'authentification sur endpoints sensibles
-2. Manque de validation d'input
-3. Exposition de données sensibles
-4. Pas de rate limiting
-5. Messages d'erreur trop informatifs
-6. Pas de headers de sécurité
+L'API vulnérable contient 6 problèmes. Voici ce qu'ils permettent concrètement à un attaquant de faire :
+
+| Vulnérabilité | Ce qu'un attaquant peut faire |
+|---|---|
+| Endpoints sans authentification | Lire ou modifier les données de n'importe quel utilisateur |
+| Validation d'input absente | Envoyer des valeurs aberrantes (prix négatif, champ vide, injection) |
+| Exposition de données sensibles | Récupérer des mots de passe ou emails depuis une réponse JSON |
+| Pas de rate limiting | Tester des milliers de mots de passe en quelques secondes |
+| Messages d'erreur détaillés | Déduire la structure de la base de données depuis les messages d'erreur |
+| Headers de sécurité manquants | Intégrer l'API dans un iframe malveillant (clickjacking) |
+
+Votre travail : corriger chacun de ces points dans l'exercice.
 
 ## Bonnes pratiques à implémenter
 

@@ -67,6 +67,26 @@ Chaque fois qu'un utilisateur voit ce commentaire, le script s'exécute et vole 
 3. Tous les utilisateurs qui voient ce commentaire exécutent automatiquement le script
 4. Le script vole les cookies de session ou effectue d'autres actions malveillantes
 
+**Pourquoi c'est le plus dangereux** : une seule action de l'attaquant suffit à affecter potentiellement des milliers d'utilisateurs.
+
+```
+Attaquant              Serveur / BDD              Victime A   Victime B   Victime C
+    |                        |                        |           |           |
+    |-- POST commentaire --->|                        |           |           |
+    |  <script>vol()</script>|                        |           |           |
+    |                        |-- stocké en BDD ------>|           |           |
+    |                        |                        |           |           |
+    |                        |<-- GET page -----------|           |           |
+    |                        |-- HTML + script ------>|           |           |
+    |                        |              script s'exécute      |           |
+    |                        |<-- GET page -----------------------|           |
+    |                        |-- HTML + script ------------------>|           |
+    |                        |                        script s'exécute        |
+    |                        |<-- GET page -----------------------------------|
+    |                        |-- HTML + script --------------------------->   |
+    |                        |                                   script s'exécute
+```
+
 #### 3. XSS basé sur le DOM (DOM-based XSS)
 
 Le code malveillant modifie le **DOM directement via JavaScript côté client**, sans que le code malveillant ne soit présent dans le HTML initial envoyé par le serveur. La vulnérabilité se trouve dans le code JavaScript côté client qui manipule le DOM de manière non sécurisée.
